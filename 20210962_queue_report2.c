@@ -31,6 +31,11 @@ bool isFull(printQueue *q) {
 }
 
 bool enqueue(printQueue* q, char *documentName, int numPages) {
+	if (numPages > 50) {
+		printf("입력 거절 됨. 페이지 수가 50을 초과했습니다.");
+		return false;
+		
+	}
 	if (isFull(q))
 	{
 		printf("대기열 가득 참. 작업 추가 불가");
@@ -38,6 +43,7 @@ bool enqueue(printQueue* q, char *documentName, int numPages) {
 	}
 	strcpy(q->queue[q->rear].documentName, documentName);
 	q->queue[q->rear].numPages = numPages;
+	q->rear = (q->rear + 1) % SIZE;
 	printf("작업 %s / %d 페이지 /가 대기열에 추가되었습니다.\n", documentName, numPages);
 	return true;
 }
